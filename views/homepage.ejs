@@ -1,30 +1,68 @@
-<%- include("navbar"); %> 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+	<title>Tower of Hanoi</title>
+    <!--Use justify-content and align-items to place element in the middle of page-->
     <style>
-        .container{
-        width: 800px;
-        height: 1000px;
-        background: antiquewhite;
-        
-        position:absolute;
-        left:0;
-        top: 80%;
-        bottom: 0;
-        right: 0;
-        margin: auto;
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        canvas {
+            border: 1px solid black;
         }
     </style>
 </head>
 <body>
-    <div>
-        <div class="container">
-            <br><br>
-            <h2 style="text-align:center">Tower of Hanoi</h2>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        </div>
-    </div>
-</body>
-</html>
+    <canvas id="canvas" width="700" height="400"></canvas>
+    <script>
+        var numDisks = 5;
+        var tower1 = [];
+        var tower2 = [];
+        var tower3 = [];
+
+        // Initialize towers
+        for (var i = numDisks; i > 0; i--) {
+            tower1.push(i);
+        }
+
+        // Canvas variables
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");//create a 2d rending context obj
+        var towerWidth = 150;
+        var towerHeight = 300;
+        var diskHeight = 20;
+        var diskWidths = [120, 100, 80, 60, 40];
+        var colors = ["red", "orange", "yellow", "green", "blue"];
+
+        // Draw the towers and disks
+        function draw() {
+            // Draw the towers
+            // Draw a filled rectangle: fillRect(x, y, width, height). x, y= the coordinates in the top left corner of the rectangle
+            ctx.fillStyle = "Burlywood";//fill color
+            ctx.fillRect(150, 50, 10, towerHeight);
+            ctx.fillRect(350, 50, 10, towerHeight);
+            ctx.fillRect(550, 50, 10, towerHeight);
+            //Lower pedestals
+            ctx.fillRect(70, 350, 580, 18);
+
+            // Draw the disks on tower 1
+            for (var i = 0; i < numDisks; i++) {
+                var diskWidth = diskWidths[i];
+                var color = colors[i];
+
+                if (tower1.length > i) {
+                    var x = 155 - diskWidth / 2;
+                    var y = towerHeight - i * diskHeight + 30;
+                    ctx.fillStyle = color;
+                    ctx.fillRect(x, y, diskWidth, diskHeight);
+                }
+            }
+        }
+        draw();
+    </script>
+  </body>
